@@ -1,4 +1,4 @@
-import { isNotNumber } from "./utils";
+import { isNotNumber } from './utils';
 
 interface Result {
   periodLength: number;
@@ -15,7 +15,10 @@ interface ExerciseArguments {
   targetAmount: number;
 }
 
-const calculateExercise = (exerciseHours: number[], targetAmount: number) => {
+export const calculateExercise = (
+  exerciseHours: number[],
+  targetAmount: number
+) => {
   const periodLength = exerciseHours.length;
 
   const trainingDays = exerciseHours.filter(day => day > 0).length;
@@ -34,7 +37,7 @@ const calculateExercise = (exerciseHours: number[], targetAmount: number) => {
     ratingDescription = 'not too bad but could be better.';
   } else {
     rating = 1;
-    ratingDescription = 'You need to work harder to reach your target.';
+    ratingDescription = 'bad';
   }
 
   const result: Result = {
@@ -65,15 +68,18 @@ const parseExerciseArguments = (args: string[]): ExerciseArguments => {
   return { targetAmount, exerciseHours };
 };
 
-// console.log(calculateExercise([3, 0, 2, 4.5, 0, 3, 1], 2));
-try {
-  const { targetAmount, exerciseHours } = parseExerciseArguments(process.argv);
-  const results = calculateExercise(exerciseHours, targetAmount);
-  console.log(results);
-} catch (error: unknown) {
-  let errorMessage = 'something bad happened.';
-  if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message;
+if (require.main === module) {
+  try {
+    const { targetAmount, exerciseHours } = parseExerciseArguments(
+      process.argv
+    );
+    const results = calculateExercise(exerciseHours, targetAmount);
+    console.log(results);
+  } catch (error: unknown) {
+    let errorMessage = 'something bad happened.';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    console.log(errorMessage);
   }
-  console.log(errorMessage);
 }
