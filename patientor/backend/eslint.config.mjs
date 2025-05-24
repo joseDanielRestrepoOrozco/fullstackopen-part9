@@ -8,7 +8,7 @@ import stylisticTs from '@stylistic/eslint-plugin-ts'
 export default defineConfig([
   tseslint.configs.recommended,
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    files: ['**/*.{js,mjs,cjs}'],
     plugins: { js },
     extends: ['js/recommended'],
   },
